@@ -230,8 +230,7 @@ with right:
 
     with st.expander("Preview prompt"):
         st.code(prompt, language="text")
-
-    if btn_ai:
+        if btn_ai:
     if not GEN_AVAILABLE:
         st.error("Gemini not configured or google-generativeai not installed. Add GEMINI_API_KEY to Streamlit secrets.")
     else:
@@ -257,6 +256,7 @@ with right:
             except Exception as e:
                 st.error(f"Gemini call failed: {e}")
                 add_history("assistant", f"Gemini call failed: {e}")
+
     st.markdown("---")
     st.caption("Tip: Use 'Include dataset/model suggestions' to give Gemini concrete foods to include or modify.")
 
