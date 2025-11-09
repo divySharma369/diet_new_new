@@ -238,7 +238,7 @@ with right:
         add_history("user", "Requested Gemini suggestions")
         with st.spinner("Contacting Gemini..."):
             try:
-                # Use the updated API method and model name
+                # Correct API usage for Gemini v1
                 model_handle = genai.GenerativeModel("models/gemini-1.5-flash")
                 response = model_handle.generate_content(prompt)
                 response_text = response.text.strip() if hasattr(response, "text") else str(response)
@@ -257,8 +257,6 @@ with right:
             except Exception as e:
                 st.error(f"Gemini call failed: {e}")
                 add_history("assistant", f"Gemini call failed: {e}")
-
-
     st.markdown("---")
     st.caption("Tip: Use 'Include dataset/model suggestions' to give Gemini concrete foods to include or modify.")
 
