@@ -1,8 +1,9 @@
 
+google-generativeai>=0.5.2
 streamlit
 pandas
 numpy
 scikit-learn
 torch
-google-generativeai
+
 
