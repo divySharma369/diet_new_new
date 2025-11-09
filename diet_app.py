@@ -238,7 +238,7 @@ with right:
             add_history("user", "Requested Gemini suggestions")
             with st.spinner("Contacting Gemini..."):
                 try:
-                    model_handle = genai.GenerativeModel("gemini-1.5")
+                    model_handle = genai.GenerativeModel("gemini-1.5-flash")
                     resp = model_handle.generate_content(prompt)
                     response_text = getattr(resp, "text", None) or str(resp)
                     # try to parse JSON if model returned JSON
