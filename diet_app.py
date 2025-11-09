@@ -231,31 +231,30 @@ with right:
     with st.expander("Preview prompt"):
         st.code(prompt, language="text")
         if btn_ai:
-    if not GEN_AVAILABLE:
-        st.error("Gemini not configured or google-generativeai not installed. Add GEMINI_API_KEY to Streamlit secrets.")
-    else:
-        add_history("user", "Requested Gemini suggestions")
-        with st.spinner("Contacting Gemini..."):
-            try:
-                # Correct API usage for Gemini v1
-                model_handle = genai.GenerativeModel("models/gemini-1.5-flash")
-                response = model_handle.generate_content(prompt)
-                response_text = response.text.strip() if hasattr(response, "text") else str(response)
-                
-                try:
-                    parsed = json.loads(response_text)
-                    st.success("Gemini returned structured plan:")
-                    st.code(json.dumps(parsed, indent=2), language="json")
-                    add_history("assistant", json.dumps(parsed))
-                except Exception:
-                    st.markdown(
-                        f"<div style='background:#f9f9f9;border-radius:8px;padding:12px;'>{response_text}</div>",
-                        unsafe_allow_html=True
-                    )
-                    add_history("assistant", response_text)
-            except Exception as e:
-                st.error(f"Gemini call failed: {e}")
-                add_history("assistant", f"Gemini call failed: {e}")
+            if not GEN_AVAILABLE:
+                st.error("Gemini not configured or google-generativeai not installed. Add GEMINI_API_KEY to Streamlit secrets.")
+            else:
+                add_history("user", "Requested Gemini suggestions")
+                with st.spinner("Contacting Gemini..."):
+                    try:
+                        # Correct API usage for Gemini v1
+                        model_handle = genai.GenerativeModel("models/gemini-1.5-flash")
+                        response = model_handle.generate_content(prompt)
+                        response_text = response.text.strip() if hasattr(response, "text") else str(response)
+                        try:
+                            parsed = json.loads(response_text)
+                            st.success("Gemini returned structured plan:")
+                            st.code(json.dumps(parsed, indent=2), language="json")
+                            add_history("assistant", json.dumps(parsed))
+                        except Exception:
+                            st.markdown(
+                                f"<div style='background:#f9f9f9;border-radius:8px;padding:12px;'>{response_text}</div>",
+                                unsafe_allow_html=True
+                            )
+                            add_history("assistant", response_text)
+                        except Exception as e:
+                            st.error(f"Gemini call failed: {e}")
+                            add_history("assistant", f"Gemini call failed: {e}")
 
     st.markdown("---")
     st.caption("Tip: Use 'Include dataset/model suggestions' to give Gemini concrete foods to include or modify.")
